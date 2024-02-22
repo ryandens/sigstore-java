@@ -27,10 +27,10 @@ public class Verifiers {
 
   /** Returns a new verifier for the provided public key to use during verification. */
   public static Verifier newVerifier(PublicKey publicKey) throws NoSuchAlgorithmException {
-    if (publicKey.getAlgorithm().equals("RSA")) {
+    if ("RSA".equals(publicKey.getAlgorithm())) {
       return new RsaVerifier(publicKey);
     }
-    if (publicKey.getAlgorithm().equals("EC") || publicKey.getAlgorithm().equals("ECDSA")) {
+    if ("EC".equals(publicKey.getAlgorithm()) || "ECDSA".equals(publicKey.getAlgorithm())) {
       return new EcdsaVerifier(publicKey);
     }
     throw new NoSuchAlgorithmException(

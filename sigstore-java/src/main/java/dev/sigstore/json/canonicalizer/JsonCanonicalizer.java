@@ -252,7 +252,7 @@ class JsonDecoder {
       return Double.valueOf(token); // Syntax check...
     } else if (BOOLEAN_PATTERN.matcher(token).matches()) {
       return Boolean.valueOf(token);
-    } else if (token.equals("null")) {
+    } else if ("null".equals(token)) {
       return null;
     } else {
       throw new IOException("Unrecognized or malformed JSON token: " + token);
