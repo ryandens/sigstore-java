@@ -25,6 +25,8 @@ import dev.sigstore.http.ImmutableHttpParams;
 import dev.sigstore.tuf.model.Role;
 import dev.sigstore.tuf.model.Root;
 import dev.sigstore.tuf.model.SignedTufMeta;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,7 +48,7 @@ public class HttpMetaFetcher implements MetaFetcher {
     if (mirror.toString().endsWith("/")) {
       return new HttpMetaFetcher(mirror);
     }
-    return new HttpMetaFetcher(new URL(mirror.toExternalForm() + "/"));
+    return new HttpMetaFetcher(Urls.create(mirror.toExternalForm() + "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
   }
 
   @Override
