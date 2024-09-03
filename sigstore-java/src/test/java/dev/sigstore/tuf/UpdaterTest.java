@@ -17,6 +17,8 @@ package dev.sigstore.tuf;
 
 import static dev.sigstore.testkit.tuf.TestResources.UPDATER_REAL_TRUSTED_ROOT;
 import static dev.sigstore.testkit.tuf.TestResources.UPDATER_SYNTHETIC_TRUSTED_ROOT;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.common.collect.ImmutableList;
@@ -948,7 +950,7 @@ class UpdaterTest {
     return Updater.builder()
         .setClock(Clock.fixed(Instant.parse(time), ZoneOffset.UTC))
         .setVerifiers(Verifiers::newVerifier)
-        .setFetcher(HttpMetaFetcher.newFetcher(new URL(remoteUrl)))
+        .setFetcher(HttpMetaFetcher.newFetcher(Urls.create(remoteUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS)))
         .setTrustedRootPath(RootProvider.fromFile(trustedRootFile))
         .setLocalStore(FileSystemTufStore.newFileSystemStore(localStore))
         .build();

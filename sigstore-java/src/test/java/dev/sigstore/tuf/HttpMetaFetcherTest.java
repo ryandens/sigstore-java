@@ -15,6 +15,8 @@
  */
 package dev.sigstore.tuf;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +27,7 @@ class HttpMetaFetcherTest {
   @ParameterizedTest
   @CsvSource({"http://example.com", "http://example.com/"})
   public void newFetcher_urlNoTrailingSlash(String url) throws Exception {
-    var fetcher = HttpMetaFetcher.newFetcher(new URL(url));
+    var fetcher = HttpMetaFetcher.newFetcher(Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
     Assertions.assertEquals("http://example.com/", fetcher.getSource());
   }
 }
